@@ -16,6 +16,11 @@ const SignUpForm = () => {
     (state) => state.signUp.signUpData
   );
 
+  const [todos, setTodos] = useState(null);
+  const [todo, setTodo] = useState({
+    title: "",
+  });
+
   useEffect(() => {
     idRef.current.focus();
     noticeRef.current[0].style.display = "none";
@@ -23,63 +28,62 @@ const SignUpForm = () => {
     noticeRef.current[2].style.display = "none";
   }, []);
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    dispatch(changeUserInfo({ userId, password, nickName }));
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:4000/todos");
+        setTodos(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchPost();
+  }, []);
+  console.log(todos);
 
-    if (!checkLength(userId, 4, 10)) {
-      dispatch(changeValue({ type: "userId", content: "" }));
-      noticeRef.current[0].style.display = "block";
-      return;
-    }
+  const handleFormSubmit = async (todo) => {
+    //e.preventDefault();
 
-    if (!checkLength(password, 4, 15)) {
-      dispatch(changeValue({ type: "password", content: "" }));
-      noticeRef.current[1].style.display = "block";
-      return;
-    }
+    // dispatch(changeUserInfo({ userId, password, nickName }));
 
-    if (!checkLength(nickName, 0, 10)) {
-      dispatch(changeValue({ type: "nickName", content: "" }));
-      noticeRef.current[2].style.display = "block";
-      return;
-    }
+    // if (!checkLength(userId, 4, 10)) {
+    //   dispatch(changeValue({ type: "userId", content: "" }));
+    //   noticeRef.current[0].style.display = "block";
+    // }
+
+    // if (!checkLength(password, 4, 15)) {
+    //   dispatch(changeValue({ type: "password", content: "" }));
+    //   noticeRef.current[1].style.display = "block";
+    // }
+
+    // if (!checkLength(nickName, 1, 10)) {
+    //   dispatch(changeValue({ type: "nickName", content: "" }));
+    //   noticeRef.current[2].style.display = "block";
+    // }
+
+    await axios.post("http://localhost:4000/todos", todo);
   };
 
   // 잘 나오는데 뭐지???
-  console.log(noticeRef.current[0], noticeRef.current[1], noticeRef.current[2]);
-
-  console.log(userId, password, nickName);
-
-  const [post, setPost] = useState(null);
-
-  //   useEffect(() => {
-  //     const fetchPost = async () => {
-  //       try {
-  //         const { data } = await axios.get("http://localhost:4000/todos");
-  //         setPost(data);
-  //       } catch (error) {
-  console.log(userId, password, nickName);
-  //         console.error(error);
-  //       }
-  //     };
-  //     fetchPost();
-  //   }, []);
+  //console.log(noticeRef.current[0], noticeRef.current[1], noticeRef.current[2]);
 
   return (
     <>
       <S.Container>
         <S.Title>회원가입</S.Title>
-        <S.Form onSubmit={handleFormSubmit}>
+        <S.Form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleFormSubmit(todo);
+          }}
+        >
           <S.InputBox>
             <S.Label htmlFor="user-id">아이디</S.Label>
             <S.Input
               id="user-id"
               ref={idRef}
               onChange={(e) => {
-                dispatch(
-                  changeValue({ type: "userId", content: e.target.value })
-                );
+                setTodo({ ...todo, title: e.target.value });
               }}
             />
             <S.Notice ref={(element) => (noticeRef.current[0] = element)}>
@@ -116,7 +120,9 @@ const SignUpForm = () => {
             </S.Notice>
           </S.InputBox>
           <S.ButtonBox>
-            <S.Button $bgColor="lightgrey">회원가입</S.Button>
+            <S.Button type="submit" $bgColor="lightgrey">
+              회원가입
+            </S.Button>
             <S.Button
               type="button"
               onClick={() => {

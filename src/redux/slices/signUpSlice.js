@@ -20,6 +20,11 @@ const signUpSlice = createSlice({
       state.userId = action.payload.userId;
       state.password = action.payload.password;
       state.nickName = action.payload.nickName;
+      //   console.log(
+      //     action.payload.userId,
+      //     action.payload.password,
+      //     action.payload.nickName
+      //   );
     },
   },
 });

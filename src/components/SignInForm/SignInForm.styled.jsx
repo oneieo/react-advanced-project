@@ -40,6 +40,7 @@ export const InputBox = styled.div`
 
 export const Label = styled.label`
   font-size: 17px;
+  margin-bottom: 8px;
 `;
 
 export const Input = styled.input`

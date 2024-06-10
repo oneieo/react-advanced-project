@@ -11,6 +11,8 @@ const SignInForm = () => {
 
   useEffect(() => {
     idRef.current.focus();
+    noticeRef.current[0].style.display = "none";
+    noticeRef.current[1].style.display = "none";
   }, []);
 
   return (
@@ -21,12 +23,16 @@ const SignInForm = () => {
           <S.InputBox>
             <S.Label htmlFor="user-id">아이디</S.Label>
             <S.Input id="user-id" ref={idRef} />
-            <S.Notice $color="white">아이디를 정확히 입력해주세요.</S.Notice>
+            <S.Notice ref={(element) => (noticeRef.current[0] = element)}>
+              아이디를 정확히 입력해주세요.
+            </S.Notice>
           </S.InputBox>
           <S.InputBox>
             <S.Label htmlFor="user-password">비밀번호</S.Label>
             <S.Input id="user-password" type="password" />
-            <S.Notice $color="white">비밀번호를 정확히 입력해주세요.</S.Notice>
+            <S.Notice ref={(element) => (noticeRef.current[1] = element)}>
+              비밀번호를 정확히 입력해주세요.
+            </S.Notice>
           </S.InputBox>
           <S.ButtonBox>
             <S.Button $bgColor="lightgrey">로그인</S.Button>
