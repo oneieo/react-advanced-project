@@ -67,4 +67,5 @@ export const Button = styled.button`
   border-radius: 10px;
   background-color: ${(prop) => prop.$bgColor};
   font-size: 17px;
+  font-weight: bold;
 `;
