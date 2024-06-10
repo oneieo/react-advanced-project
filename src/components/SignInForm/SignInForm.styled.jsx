@@ -32,10 +32,10 @@ export const Form = styled.form`
 
 export const InputBox = styled.div`
   width: 500px;
-  height: 70px;
+  height: 85px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  //justify-content: space-between;
 `;
 
 export const Label = styled.label`
@@ -52,6 +52,14 @@ export const Input = styled.input`
   &:focus {
     outline: none;
   }
+`;
+
+export const Notice = styled.span`
+  font-size: 11px;
+  color: #ff9100;
+  font-weight: bold;
+  text-indent: 10px;
+  margin-top: 7px;
 `;
 
 export const ButtonBox = styled.div`

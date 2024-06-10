@@ -17,7 +17,8 @@ export const Container = styled.div`
 export const Title = styled.h1`
   font-size: 30px;
   //background-color: pink;
-  margin-bottom: 23px;
+  margin-top: 10px;
+  margin-bottom: 15px;
 `;
 
 export const Form = styled.form`
@@ -32,14 +33,15 @@ export const Form = styled.form`
 
 export const InputBox = styled.div`
   width: 500px;
-  height: 70px;
+  height: 85px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  //justify-content: space-between;
 `;
 
 export const Label = styled.label`
   font-size: 17px;
+  margin-bottom: 10px;
 `;
 
 export const Input = styled.input`
@@ -52,6 +54,14 @@ export const Input = styled.input`
   &:focus {
     outline: none;
   }
+`;
+
+export const Notice = styled.span`
+  color: #ff9100;
+  font-size: 12px;
+  font-weight: bold;
+  text-indent: 10px;
+  margin-top: 7px;
 `;
 
 export const ButtonBox = styled.div`
