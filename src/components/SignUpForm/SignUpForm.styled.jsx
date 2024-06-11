@@ -8,7 +8,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   background-color: white;
-  margin-top: 100px;
+  margin: 100px auto;
   border: none;
   border-radius: 20px;
   font-family: "Noto Sans KR", sans-serif;

@@ -23,6 +23,17 @@ const SignUpForm = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
+    if (!checkLength(id, 4, 10)) {
+      noticeRef.current[0].style.display = "block";
+    }
+    if (!checkLength(password, 4, 15)) {
+      noticeRef.current[1].style.display = "block";
+    }
+    if (!checkLength(nickname, 1, 10)) {
+      noticeRef.current[2].style.display = "block";
+      return;
+    }
+
     try {
       const { data } = await axios.post(
         "https://moneyfulpublicpolicy.co.kr/register",
@@ -30,6 +41,7 @@ const SignUpForm = () => {
       );
 
       if (data.success) {
+        alert(`회원가입에 성공하였습니다. 로그인 창으로 이동합니다.`);
         navigate("/login");
       } else {
         alert("회원가입에 실패하였습니다.");
@@ -38,20 +50,6 @@ const SignUpForm = () => {
       console.error("Signup Error: ", error);
       alert("회원가입에 실패하였습니다.");
     }
-
-    // dispatch(changeUserInfo({ userId, password, nickName }));
-    // if (!checkLength(userId, 4, 10)) {
-    //   dispatch(changeValue({ type: "userId", content: "" }));
-    //   noticeRef.current[0].style.display = "block";
-    // }
-    // if (!checkLength(password, 4, 15)) {
-    //   dispatch(changeValue({ type: "password", content: "" }));
-    //   noticeRef.current[1].style.display = "block";
-    // }
-    // if (!checkLength(nickName, 1, 10)) {
-    //   dispatch(changeValue({ type: "nickName", content: "" }));
-    //   noticeRef.current[2].style.display = "block";
-    // }
   };
 
   return (

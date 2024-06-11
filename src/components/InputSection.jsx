@@ -8,12 +8,11 @@ import { createContents, loadContents } from "../redux/slices/contentsSlice";
 const Wrapper = styled.div`
   width: 800px;
   height: 95px;
-  margin-top: 30px;
+  margin: 20px auto;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #ffffff;
-  //border: 2px solid #dadada;
   border-radius: 15px;
 `;
 
