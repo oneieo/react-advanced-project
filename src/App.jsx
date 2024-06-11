@@ -6,6 +6,7 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   const fetchTodos = async () => {
@@ -26,18 +27,20 @@ function App() {
     return <div>데이터 조회 오류!</div>;
   }
 
-  console.log(data);
+  //console.log(data);
 
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<SignIn />} />
-          <Route path="/detail/:id" element={<Detail />} />
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<SignIn />} />
+            <Route path="/detail/:id" element={<Detail />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </>
   );
 }
