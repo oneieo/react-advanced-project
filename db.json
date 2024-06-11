@@ -2,7 +2,8 @@
   "todos": [
     {
       "id": "58b9",
-      "title": "하핳"
+      "title": "하핳",
+      "isDone": true
     }
   ]
 }
