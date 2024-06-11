@@ -1,16 +1,22 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as S from "./EditProfile.styled";
 
 const EditProfile = () => {
   const nicknameRef = useRef();
   const noticeRef = useRef();
+  const [imgFile, setImgFile] = useState("");
 
   useEffect(() => {
     nicknameRef.current.focus();
     noticeRef.current.style.display = "none";
   });
 
-  //const handleImageFile = () => {};
+  const handleImageFile = (e) => {
+    setImgFile(e.target.files[0]);
+  };
+  console.log(imgFile); // 닉네임이랑 이미지 업로드하기... axios.post
+  // const imgUrl = URL.createObjectURL(imgFile);
+  // console.log(imgUrl);
 
   return (
     <>
@@ -37,8 +43,8 @@ const EditProfile = () => {
               id="user-nickname"
               type="file"
               accept="image/*"
-              style={{ marginTop: "20px;" }}
-              // onChange={handleImageFile}
+              style={{ marginTop: "20px" }}
+              onChange={handleImageFile}
             />
           </S.InputBox>
           <S.Button>프로필 업데이트</S.Button>

@@ -28,8 +28,6 @@ const NavBar = () => {
     // token이 변경될 때마다(로그인 하면) getUserData 실행
   }, [token]);
 
-  console.log(userInfo);
-
   const handleLogout = () => {
     const confirmLogout = confirm("로그아웃 하시겠습니까?");
     if (confirmLogout) {
