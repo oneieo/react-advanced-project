@@ -7,6 +7,8 @@ import SignIn from "./pages/SignIn";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { AuthProvider } from "./context/AuthContext";
+import MyProfile from "./pages/MyProfile";
+import Layout from "./components/Layout";
 
 function App() {
   const fetchTodos = async () => {
@@ -34,10 +36,13 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<SignIn />} />
-            <Route path="/detail/:id" element={<Detail />} />
+            <Route element={<Layout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={<SignIn />} />
+              <Route path="/detail/:id" element={<Detail />} />
+              <Route path="/myprofile" element={<MyProfile />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </AuthProvider>

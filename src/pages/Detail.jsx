@@ -7,7 +7,7 @@ import { deleteContents, updateContents } from "../redux/slices/contentsSlice";
 const Wrapper = styled.div`
   width: 800px;
   height: 400px;
-  margin-top: 30px;
+  margin: 30px auto;
   display: flex;
   justify-content: center;
   align-items: center;
