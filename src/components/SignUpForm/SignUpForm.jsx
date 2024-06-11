@@ -1,12 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import * as S from "./SignUpForm.styled";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
-import api from "../../axios/api";
-import { useDispatch, useSelector } from "react-redux";
-import { changeUserInfo, changeValue } from "../../redux/slices/signUpSlice";
+import { useDispatch } from "react-redux";
 import { checkLength } from "./signUpValidation";
-import { useQuery } from "@tanstack/react-query";
 
 const SignUpForm = () => {
   const [userId, setUserId] = useState("");
