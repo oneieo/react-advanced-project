@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./SignUpForm.styled";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import api from "../../axios/api";
 import { useDispatch, useSelector } from "react-redux";
 import { changeUserInfo, changeValue } from "../../redux/slices/signUpSlice";
 import { checkLength } from "./signUpValidation";
@@ -20,6 +21,10 @@ const SignUpForm = () => {
   const [todo, setTodo] = useState({
     title: "",
   });
+  const [targetId, setTargetId] = useState(null);
+  const [editTodo, setEditTodo] = useState({
+    title: "",
+  });
 
   useEffect(() => {
     idRef.current.focus();
@@ -31,7 +36,7 @@ const SignUpForm = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const { data } = await axios.get("http://localhost:4000/todos");
+        const { data } = await api.get("/todos");
         setTodos(data);
       } catch (error) {
         console.error(error);
@@ -61,14 +66,66 @@ const SignUpForm = () => {
     //   noticeRef.current[2].style.display = "block";
     // }
 
-    await axios.post("http://localhost:4000/todos", todo);
+    // 1. post의 결과(응답)을 받아와서
+    const { data } = await api.post("/todos", todo);
+
+    // post 요청이 끝나고 나면 ↓↓↓
+    // setTodos([...todos, todo]); 요렇게 하면 서버로부터 받아온 응답을 넣는 게 아니라
+    // 폼을 제출할 때 입력한 todo(title만 존재)를 todos에 추가해주는 것이라서 id가 존재하지 않음
+
+    // 그러므로, 서버로부터 받아온 응답을 todos에 넣어주어야 함
+    // 2. todos에 넣어주기
+    setTodos([...todos, data]);
   };
 
-  // 잘 나오는데 뭐지???
-  //console.log(noticeRef.current[0], noticeRef.current[1], noticeRef.current[2]);
+  const handleDelBtn = async (id) => {
+    // 삭제할 데이터의 id를 넘겨주어야 하므로 url 마지막에 슬래시 추가하고, id 추가하기
+    await api.delete("/todos/" + id);
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  const onEditHandler = async (targetId, editTodo) => {
+    await api.patch(`/todos/${targetId}`, editTodo);
+    const newTodos = todos.map((todo) => {
+      if (todo.id === targetId) {
+        return { ...todo, title: editTodo.title };
+      } else {
+        return todo;
+      }
+    });
+    setTodos(newTodos);
+  };
 
   return (
     <>
+      {todos?.map((todo) => {
+        return (
+          <div key={todo.id}>
+            <p style={{ color: "white" }}>{todo.title}</p>
+            <button onClick={() => handleDelBtn(todo.id)}>삭제</button>
+          </div>
+        );
+      })}
+      <>
+        <input
+          type="text"
+          placeholder="수정하고 싶은 todo id 입력"
+          onChange={(e) => setTargetId(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="수정 내용 입력"
+          onChange={(e) => setEditTodo({ ...editTodo, title: e.target.value })}
+        />
+        <button
+          type="button"
+          onClick={() => {
+            onEditHandler(targetId, editTodo);
+          }}
+        >
+          수정
+        </button>
+      </>
       <S.Container>
         <S.Title>회원가입</S.Title>
         <S.Form
