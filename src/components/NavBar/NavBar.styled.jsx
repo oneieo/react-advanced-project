@@ -35,8 +35,8 @@ export const RightBox = styled.div`
 `;
 
 export const ProfileImg = styled.img`
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   border: 1px solid white;
   border-radius: 50%;
 `;

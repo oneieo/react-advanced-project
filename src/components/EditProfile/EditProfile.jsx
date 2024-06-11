@@ -37,7 +37,7 @@ const EditProfile = () => {
               id="user-nickname"
               type="file"
               accept="image/*"
-              style={{ marginTop: "20px" }}
+              style={{ marginTop: "20px;" }}
               // onChange={handleImageFile}
             />
           </S.InputBox>
