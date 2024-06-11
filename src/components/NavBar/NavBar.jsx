@@ -8,6 +8,9 @@ const NavBar = () => {
   const navigate = useNavigate();
   const { logout } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({});
+  const [profileImg, setProfileImg] = useState(
+    "/public/default_profileImg.png"
+  );
 
   const token = localStorage.getItem("accessToken");
 
@@ -48,7 +51,7 @@ const NavBar = () => {
           </Link>
         </S.LeftBox>
         <S.RightBox>
-          <S.ProfileImg src="/public/vite.svg" />
+          <S.ProfileImg src={profileImg} />
           <S.Nickname>{userInfo.nickname}</S.Nickname>
           <S.Button onClick={handleLogout}>Logout</S.Button>
         </S.RightBox>
