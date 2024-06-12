@@ -24,3 +24,28 @@ export const postExpense = async (newExpense) => {
     alert("post 실패!");
   }
 };
+
+export const updateExpenseData = async (editedContent) => {
+  try {
+    const { data } = await axios.patch(
+      `${JSON_SERVER_HOST}/expenses`,
+      editedContent
+    );
+    return data;
+  } catch (error) {
+    console.error("Error => ", error);
+    alert("지출내역 업데이트 실패!");
+  }
+};
+
+export const deleteExpenseData = async (contentId) => {
+  try {
+    const { data } = await axios.delete(
+      `${JSON_SERVER_HOST}/expenses/${contentId}`
+    );
+    return data;
+  } catch (error) {
+    console.error("Error => ", error);
+    alert("지출내역 삭제 실패!");
+  }
+};

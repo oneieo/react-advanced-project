@@ -3,8 +3,13 @@ import { useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteContents, updateContents } from "../redux/slices/contentsSlice";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import {
+  deleteExpenseData,
+  getExpenses,
+  updateExpenseData,
+} from "../axios/expense.api";
 
 const Wrapper = styled.div`
   width: 800px;
@@ -81,14 +86,27 @@ const Button = styled.button`
 
 const Detail = () => {
   //const { prevcontents, setContents } = useContext(ContentsContext);
+  const refDate = useRef(null);
+  const refItem = useRef(null);
+  const refDescription = useRef(null);
+  const refAmount = useRef(null);
   const navigate = useNavigate();
   const { id } = useParams();
-  const dispatch = useDispatch();
-
-  const getExpensesData = async () => {
-    const { data } = await axios.get("http://localhost:5000/expenses");
-    return data;
-  };
+  const queryClient = new QueryClient();
+  const deleteExpenseMutation = useMutation({
+    mutationFn: deleteExpenseData,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["expenses"]);
+      // 강제 새로고침 외에는 바로 리렌더링 되는 방법이 없을까요,,,?
+      navigate(0);
+    },
+  });
+  const updateExpenseMutation = useMutation({
+    mutationFn: updateExpenseData,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["expenses"]);
+    },
+  });
 
   const {
     data: expenses,
@@ -96,7 +114,7 @@ const Detail = () => {
     isError,
   } = useQuery({
     queryKey: ["expenses"],
-    queryFn: getExpensesData,
+    queryFn: getExpenses,
   });
 
   if (isLoading) {
@@ -108,14 +126,7 @@ const Detail = () => {
 
   const matchedContent = expenses.find((content) => content.id === id);
 
-  // 1. 날짜, 항목, 내용, 금액을 나타내는 변수명에 useRef로 초기값 설정해주기
-  const refDate = useRef(null);
-  const refItem = useRef(null);
-  const refDescription = useRef(null);
-  const refAmount = useRef(null);
-
   const handleModiBtn = () => {
-    // 3. 로컬스토리지도 업데이트
     // const updatedContents = contents.map((content) => {
     //   return content.id === id
     //     ? {
@@ -130,19 +141,19 @@ const Detail = () => {
     // });
 
     // dispatch(updateContents(updatedContents));
-    // localStorage.setItem("contents", JSON.stringify(updatedContents));
+    // updateExpenseMutation.mutate();
 
     navigate("/");
   };
 
   const handleDeleteBtn = () => {
-    // const updatedContents = contents.filter((content) => content.id !== id);
-    // const isConfirmed = confirm("해당 지출내역을 삭제합니다.");
-    // if (isConfirmed) {
-    //   dispatch(deleteContents(updatedContents));
-    //   localStorage.setItem("contents", JSON.stringify(updatedContents));
-    //   navigate("/");
-    // }
+    const updatedContents = expenses.find((content) => content.id === id);
+    console.log(updatedContents.id);
+    const isConfirmed = confirm("해당 지출내역을 삭제합니다.");
+    if (isConfirmed) {
+      deleteExpenseMutation.mutate(updatedContents.id);
+      navigate("/");
+    }
   };
 
   const handleBackBtn = () => {

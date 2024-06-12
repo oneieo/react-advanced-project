@@ -13,7 +13,6 @@ const userInfoSlice = createSlice({
   initialState,
   reducers: {
     changeValue: (state, action) => {
-      //state[action.payload.type] = action.payload.content;
       state.userInfo = action.payload;
     },
   },

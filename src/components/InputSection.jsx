@@ -94,6 +94,7 @@ const InputSection = () => {
     onSuccess: () => {
       // 쿼리키값 넣어주기
       queryClient.invalidateQueries(["expenses"]);
+      // 강제 새로고침
       navigate(0);
     },
   });
