@@ -104,6 +104,8 @@ const Detail = () => {
     mutationFn: updateExpenseData,
     onSuccess: () => {
       queryClient.invalidateQueries(["expenses"]);
+      navigate("/");
+      navigate(0);
     },
   });
 
@@ -126,17 +128,27 @@ const Detail = () => {
   const matchedContent = expenses.find((content) => content.id === id);
 
   const handleModiBtn = () => {
-    const updatedContent = {
+    //   const updatedContents = expenses.map((content) => {
+    //     return content.id === id
+    //       ? {
+    //           ...content,
+    //           date: refDate.current.value,
+    //           item: refItem.current.value,
+    //           description: refDescription.current.value,
+    //           // 문자열(String) 객체에 대해서는 toLocaleString() 메서드를 사용할 수 없으므로 숫자(Number) 객체로 형변환
+    //           amount: Number(refAmount.current.value),
+    //         }
+    //       : content;
+    //   }
+    // );
+    const newContent = {
       ...matchedContent,
       date: refDate.current.value,
       item: refItem.current.value,
       description: refDescription.current.value,
-      // 문자열(String) 객체에 대해서는 toLocaleString() 메서드를 사용할 수 없으므로 숫자(Number) 객체로 형변환
       amount: Number(refAmount.current.value),
     };
-    updateExpenseMutation.mutate(updatedContent, matchedContent.id);
-
-    navigate("/");
+    updateExpenseMutation.mutate(newContent);
   };
 
   const handleDeleteBtn = () => {

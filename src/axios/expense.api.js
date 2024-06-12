@@ -26,11 +26,12 @@ export const postExpense = async (newExpense) => {
   }
 };
 
-export const updateExpenseData = async (editedContent, contentId) => {
+export const updateExpenseData = async (editedContent) => {
+  const { id, ...rest } = editedContent;
   try {
-    const { data } = await axios.patch(
-      `${JSON_SERVER_HOST}/expenses/${contentId}`,
-      editedContent
+    const { data } = await axios.put(
+      `${JSON_SERVER_HOST}/expenses/${id}`,
+      rest
     );
     return data;
   } catch (error) {

@@ -136,13 +136,13 @@
       "createdBy": "oneiee"
     },
     {
-      "id": "e6e5ee8a-b4d6-405e-bfa2-b2e3a15320b0",
       "month": 7,
       "date": "2024-07-20",
       "item": "간식",
-      "amount": 31500,
+      "amount": 315000,
       "description": "수박",
-      "createdBy": "oneiee"
+      "createdBy": "oneiee",
+      "id": "e6e5ee8a-b4d6-405e-bfa2-b2e3a15320b0"
     }
   ]
 }
