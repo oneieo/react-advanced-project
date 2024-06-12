@@ -12,23 +12,23 @@ import Layout from "./components/Layout";
 import { useContext } from "react";
 
 function App() {
-  const fetchTodos = async () => {
-    const response = await axios.get("http://localhost:4000/todos");
-    return response.data;
-  };
+  // const fetchTodos = async () => {
+  //   const response = await axios.get("http://localhost:4000/todos");
+  //   return response.data;
+  // };
 
-  const { data, isPending, isError } = useQuery({
-    queryKey: ["todos"],
-    queryFn: fetchTodos,
-  });
+  // const { data, isPending, isError } = useQuery({
+  //   queryKey: ["todos"],
+  //   queryFn: fetchTodos,
+  // });
 
-  if (isPending) {
-    return <div style={{ color: "white" }}>로딩중입니다...</div>;
-  }
+  // if (isPending) {
+  //   return <div style={{ color: "white" }}>로딩중입니다...</div>;
+  // }
 
-  if (isError) {
-    return <div>데이터 조회 오류!</div>;
-  }
+  // if (isError) {
+  //   return <div>데이터 조회 오류!</div>;
+  // }
 
   // 로그인 필요한 페이지에 접근할 수 있게 하는 컴포넌트
   // 로그인 되어있지 않은 사용자는 로그인 페이지로 리다이렉트
@@ -49,21 +49,12 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route element={<Layout />}>
-              <Route path="/" element={<PrivateRoute element={Home} />} />
-              <Route
-                path="/signup"
-                element={<PublicRoute element={SignUp} />}
-              />
-              <Route path="/login" element={<PublicRoute element={SignIn} />} />
-              <Route
-                path="/detail/:id"
-                element={<PrivateRoute element={Detail} />}
-              />
-              <Route
-                path="/myprofile"
-                element={<PrivateRoute element={MyProfile} />}
-              />
+            <Route path="/signup" element={<PublicRoute element={SignUp} />} />
+            <Route path="/login" element={<PublicRoute element={SignIn} />} />
+            <Route element={<PrivateRoute element={Layout} />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/detail/:id" element={<Detail />} />
+              <Route path="/myprofile" element={<MyProfile />} />
             </Route>
           </Routes>
         </BrowserRouter>

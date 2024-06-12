@@ -3,7 +3,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import contentsSlice from "../slices/contentsSlice";
 import clickedMonthSlice from "../slices/clickedMonthSlice";
-import signUpSlice from "../slices/signUpSlice";
+import userInfoSlice from "../slices/userInfo.slice";
 
 // 1. rootReducer를 만들기
 //const rootReducer = combineReducers({
@@ -16,7 +16,7 @@ const store = configureStore({
   reducer: {
     contents: contentsSlice,
     clickedMonth: clickedMonthSlice,
-    signUp: signUpSlice,
+    userInfo: userInfoSlice,
   },
 });
 // 3. 만든 store 내보내기
