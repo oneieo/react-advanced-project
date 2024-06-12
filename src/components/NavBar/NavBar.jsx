@@ -12,7 +12,6 @@ const NavBar = () => {
   const { logout } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({});
   const user = useSelector((state) => state.userInfo.userInfo);
-  console.log(user);
   const [profileImg, setProfileImg] = useState(
     "/public/default_profileImg.png"
   );
@@ -30,8 +29,6 @@ const NavBar = () => {
           },
         }
       );
-      console.log(data);
-      //setUserInfo(data);
       dispatch(
         changeValue({
           userId: data.id,
@@ -48,7 +45,6 @@ const NavBar = () => {
     const confirmLogout = confirm("로그아웃 하시겠습니까?");
     if (confirmLogout) {
       logout();
-      setUserInfo({});
       navigate("/login");
     }
   };

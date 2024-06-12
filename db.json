@@ -1,9 +1,139 @@
 {
-  "todos": [
+  "expenses": [
     {
-      "id": "58b9",
-      "title": "하핳",
-      "isDone": true
+      "id": "46869445-5f9c-4650-941f-41bd9457bc07",
+      "month": 1,
+      "date": "2024-01-08",
+      "item": "간식",
+      "amount": 31500,
+      "description": "배스킨라빈스 하프갤런",
+      "createdBy": "Jiwon"
+    },
+    {
+      "id": "a5c0d8de-d010-4d07-9934-29765051a7ea",
+      "month": 1,
+      "date": "2024-01-13",
+      "item": "식비",
+      "amount": 22500,
+      "description": "엽떡 착한맛",
+      "createdBy": "Jihyun"
+    },
+    {
+      "id": "0d0a966e-5c35-4bf0-aca4-f2b1265a432d",
+      "month": 1,
+      "date": "2024-01-22",
+      "item": "영양제",
+      "amount": 40000,
+      "description": "센트룸 멀티비타민 미네랄 60정",
+      "createdBy": "Jiwon"
+    },
+    {
+      "id": "9aba6d72-5ee7-4f02-a4d4-e8bbff9ded4b",
+      "month": 1,
+      "date": "2024-01-31",
+      "item": "도서",
+      "amount": 21000,
+      "description": "모던 자바스크립트",
+      "createdBy": "Gayoung"
+    },
+    {
+      "id": "b82b213e-8164-4c89-94b0-7246cdcfc4f9",
+      "month": 2,
+      "date": "2024-02-01",
+      "item": "디저트",
+      "amount": 7900,
+      "description": "바스크 치즈케이크",
+      "createdBy": "Jieun"
+    },
+    {
+      "id": "d180194f-7c27-428a-8cd9-ad9114e58821",
+      "month": 2,
+      "date": "2024-02-14",
+      "item": "전자기기",
+      "amount": 320000,
+      "description": "AirPods pro 2",
+      "createdBy": "Jisun"
+    },
+    {
+      "id": "0abf06c3-8f0e-4ea1-9691-7facab0a91cb",
+      "month": 3,
+      "date": "2024-03-03",
+      "item": "문구",
+      "amount": 5000,
+      "description": "라벨스티커",
+      "createdBy": "Eunji"
+    },
+    {
+      "id": "0abf06c3-8f0e-4ea1-9691-7facab0a91cb",
+      "month": 4,
+      "date": "2024-04-20",
+      "item": "티켓예매",
+      "amount": 52000,
+      "description": "에버랜드 종일권",
+      "createdBy": "Gahye"
+    },
+    {
+      "id": "0abf06c3-8f0e-4ea1-9691-7facab0a91cb",
+      "month": 5,
+      "date": "2024-05-13",
+      "item": "영화",
+      "amount": 15000,
+      "description": "챌린저스",
+      "createdBy": "Jisun"
+    },
+    {
+      "id": "0abf06c3-8f0e-4ea1-9691-7facab0a91cb",
+      "month": 5,
+      "date": "2024-05-20",
+      "item": "의류",
+      "amount": 153000,
+      "description": "MisChief SS Color Blocked Windbreaker Black",
+      "createdBy": "Jiwon"
+    },
+    {
+      "id": "0abf06c3-8f0e-4ea1-9691-7facab0a91cb",
+      "month": 5,
+      "date": "2024-05-30",
+      "item": "여행",
+      "amount": 500000,
+      "description": "제주도",
+      "createdBy": "Eunji"
+    },
+    {
+      "id": "0abf06c3-8f0e-4ea1-9691-7facab0a91cb",
+      "month": 6,
+      "date": "2024-06-04",
+      "item": "티켓예매",
+      "amount": 168000,
+      "description": "인천 펜타포트 락 페스티벌 2024",
+      "createdBy": "Jiwon"
+    },
+    {
+      "id": "0abf06c3-8f0e-4ea1-9691-7facab0a91cb",
+      "month": 6,
+      "date": "2024-06-12",
+      "item": "간식",
+      "amount": 2500,
+      "description": "허쉬초코바",
+      "createdBy": "Jeongwon"
+    },
+    {
+      "id": "0abf06c3-8f0e-4ea1-9691-7facab0a91cb",
+      "month": 7,
+      "date": "2024-07-16",
+      "item": "여행",
+      "amount": 300000,
+      "description": "여름 휴가",
+      "createdBy": "Jisun"
+    },
+    {
+      "id": "0abf06c3-8f0e-4ea1-9691-7facab0a91cb",
+      "month": 8,
+      "date": "2024-08-13",
+      "item": "티켓예매",
+      "amount": 159000,
+      "description": "잔나비 콘서트",
+      "createdBy": "Me"
     }
   ]
 }

@@ -37,8 +37,8 @@ export const RightBox = styled.div`
 export const ProfileImg = styled.img`
   width: 30px;
   height: 30px;
-  //border: 1px solid white;
   border-radius: 50%;
+  object-fit: cover;
 `;
 
 export const Nickname = styled.h3`
