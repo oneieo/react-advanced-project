@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { loadContents } from "../redux/slices/contentsSlice";
 import { useQuery } from "@tanstack/react-query";
+import { getExpenses } from "../axios/expense.api";
 
 const Wrapper = styled.div`
   width: 800px;
@@ -107,13 +108,7 @@ const ExpenditureAmount = styled.span`
 
 const Expenditure = () => {
   const navigate = useNavigate();
-  const contents = useSelector((state) => state.contents.contents);
   const clickedMonth = useSelector((state) => state.clickedMonth.clickedMonth);
-
-  const getExpensesData = async () => {
-    const { data } = await axios.get("http://localhost:5000/expenses");
-    return data;
-  };
 
   const {
     data: expenses,
@@ -121,7 +116,7 @@ const Expenditure = () => {
     isError,
   } = useQuery({
     queryKey: ["expenses"],
-    queryFn: getExpensesData,
+    queryFn: getExpenses,
   });
 
   if (isLoading) {

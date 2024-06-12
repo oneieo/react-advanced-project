@@ -84,7 +84,6 @@ const Detail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
-  //const contents = useSelector((state) => state.contents.contents);
 
   const getExpensesData = async () => {
     const { data } = await axios.get("http://localhost:5000/expenses");

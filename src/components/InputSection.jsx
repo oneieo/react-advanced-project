@@ -4,6 +4,11 @@ import { useEffect, useState } from "react";
 import getToday from "../utils/getToday";
 import { useDispatch, useSelector } from "react-redux";
 import { createContents, loadContents } from "../redux/slices/contentsSlice";
+import { token } from "../axios/auth.api";
+import axios from "axios";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { postExpense } from "../axios/expense.api";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 800px;
@@ -81,21 +86,46 @@ const InputSection = () => {
   const [item, setItem] = useState("");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
-  const dispatch = useDispatch();
-  const contents = useSelector((state) => state.contents.contents);
+  const queryClient = new QueryClient();
+  const navigate = useNavigate();
 
-  // 지출내역 추가될 때마다(상태변경될때마다) 로컬스토리지에 contents 세팅
-  useEffect(() => {
-    // 로컬스토리지: 저장용 / setState: 화면그리기용
-    // 1. 로컬스토리지에서 컨텐츠를 가져온다.
-    const baseContents = JSON.parse(localStorage.getItem("contents"));
-    // 0. 만약 로컬스토리지에 컨텐츠가 없다면, setContents는 빈배열로 초기값 주기
-    if (!baseContents) {
-      return;
-    }
-    // 2. 가져온 걸 스테이트에 넣는다.
-    dispatch(loadContents(baseContents));
-  }, []);
+  const mutation = useMutation({
+    mutationFn: postExpense,
+    onSuccess: () => {
+      // 쿼리키값 넣어주기
+      queryClient.invalidateQueries(["expenses"]);
+      navigate(0);
+    },
+  });
+
+  const getUserData = async () => {
+    const { data } = await axios.get(
+      "https://moneyfulpublicpolicy.co.kr/user",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data;
+  };
+
+  const {
+    data: userData,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["userData"],
+    queryFn: getUserData,
+  });
+
+  if (isLoading) {
+    return <h1>로딩중입니다 . . .</h1>;
+  }
+  if (isError) {
+    return <h1>데이터 불러오기 실패 . . .</h1>;
+  }
 
   const handleSaveBtn = () => {
     if (!date.trim() || !item.trim() || !amount.trim() || !description.trim()) {
@@ -113,14 +143,15 @@ const InputSection = () => {
 
     const newContent = {
       id: uuidv4(),
+      month: +date.slice(5, 7),
       date,
       item,
       amount: Number(amount),
       description,
+      createdBy: userData.id,
     };
 
-    dispatch(createContents(newContent));
-    localStorage.setItem("contents", JSON.stringify([...contents, newContent]));
+    mutation.mutate(newContent);
     setDate(getToday());
     setItem("");
     setDescription("");

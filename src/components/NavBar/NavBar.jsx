@@ -5,18 +5,16 @@ import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { changeValue } from "../../redux/slices/userInfo.slice";
+import { token } from "../../axios/auth.api";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { logout } = useContext(AuthContext);
-  const [userInfo, setUserInfo] = useState({});
   const user = useSelector((state) => state.userInfo.userInfo);
   const [profileImg, setProfileImg] = useState(
     "/public/default_profileImg.png"
   );
-
-  const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
     const getUserData = async () => {
@@ -38,7 +36,6 @@ const NavBar = () => {
       );
     };
     getUserData();
-    // token이 변경될 때마다(로그인 하면) getUserData 실행
   }, []);
 
   const handleLogout = () => {
@@ -60,7 +57,7 @@ const NavBar = () => {
           </Link>
         </S.LeftBox>
         <S.RightBox>
-          <S.ProfileImg src={user.profileImg} />
+          <S.ProfileImg src={user.profileImg ? user.profileImg : profileImg} />
           <S.Nickname>{user.nickname}</S.Nickname>
           <S.Button onClick={handleLogout}>Logout</S.Button>
         </S.RightBox>
