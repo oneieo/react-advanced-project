@@ -3,6 +3,8 @@ import { useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteContents, updateContents } from "../redux/slices/contentsSlice";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const Wrapper = styled.div`
   width: 800px;
@@ -82,8 +84,30 @@ const Detail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const contents = useSelector((state) => state.contents.contents);
-  const matchedContent = contents.find((content) => content.id === id);
+  //const contents = useSelector((state) => state.contents.contents);
+
+  const getExpensesData = async () => {
+    const { data } = await axios.get("http://localhost:5000/expenses");
+    return data;
+  };
+
+  const {
+    data: expenses,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["expenses"],
+    queryFn: getExpensesData,
+  });
+
+  if (isLoading) {
+    return <h1>로딩중입니다 . . .</h1>;
+  }
+  if (isError) {
+    return <h1>데이터 조회 중 오류가 발생했습니다. . .</h1>;
+  }
+
+  const matchedContent = expenses.find((content) => content.id === id);
 
   // 1. 날짜, 항목, 내용, 금액을 나타내는 변수명에 useRef로 초기값 설정해주기
   const refDate = useRef(null);
@@ -93,34 +117,33 @@ const Detail = () => {
 
   const handleModiBtn = () => {
     // 3. 로컬스토리지도 업데이트
-    const updatedContents = contents.map((content) => {
-      return content.id === id
-        ? {
-            ...content,
-            date: refDate.current.value,
-            item: refItem.current.value,
-            description: refDescription.current.value,
-            // 문자열(String) 객체에 대해서는 toLocaleString() 메서드를 사용할 수 없으므로 숫자(Number) 객체로 형변환
-            amount: Number(refAmount.current.value),
-          }
-        : content;
-    });
+    // const updatedContents = contents.map((content) => {
+    //   return content.id === id
+    //     ? {
+    //         ...content,
+    //         date: refDate.current.value,
+    //         item: refItem.current.value,
+    //         description: refDescription.current.value,
+    //         // 문자열(String) 객체에 대해서는 toLocaleString() 메서드를 사용할 수 없으므로 숫자(Number) 객체로 형변환
+    //         amount: Number(refAmount.current.value),
+    //       }
+    //     : content;
+    // });
 
-    dispatch(updateContents(updatedContents));
-    localStorage.setItem("contents", JSON.stringify(updatedContents));
+    // dispatch(updateContents(updatedContents));
+    // localStorage.setItem("contents", JSON.stringify(updatedContents));
 
     navigate("/");
   };
 
   const handleDeleteBtn = () => {
-    const updatedContents = contents.filter((content) => content.id !== id);
-
-    const isConfirmed = confirm("해당 지출내역을 삭제합니다.");
-    if (isConfirmed) {
-      dispatch(deleteContents(updatedContents));
-      localStorage.setItem("contents", JSON.stringify(updatedContents));
-      navigate("/");
-    }
+    // const updatedContents = contents.filter((content) => content.id !== id);
+    // const isConfirmed = confirm("해당 지출내역을 삭제합니다.");
+    // if (isConfirmed) {
+    //   dispatch(deleteContents(updatedContents));
+    //   localStorage.setItem("contents", JSON.stringify(updatedContents));
+    //   navigate("/");
+    // }
   };
 
   const handleBackBtn = () => {

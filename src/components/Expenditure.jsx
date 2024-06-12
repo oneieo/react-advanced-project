@@ -135,7 +135,6 @@ const Expenditure = () => {
   const filteredList = expenses.filter((data) => {
     if (Number(data.date.slice(5, 7)) === clickedMonth) return data;
   });
-  console.log(filteredList);
 
   return (
     <Wrapper>
