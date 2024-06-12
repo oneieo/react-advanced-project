@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { loadContents } from "../redux/slices/contentsSlice";
 
 const Wrapper = styled.div`
   width: 800px;
@@ -103,12 +106,24 @@ const ExpenditureAmount = styled.span`
 
 const Expenditure = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [rawData, setRawData] = useState([]);
   const contents = useSelector((state) => state.contents.contents);
   const clickedMonth = useSelector((state) => state.clickedMonth.clickedMonth);
 
   const filteredList = contents.filter((data) => {
     if (Number(data.date.slice(5, 7)) === clickedMonth) return data;
   });
+
+  // useEffect(() => {
+  //   const getExpensesData = async () => {
+  //     const { data } = await axios.get("http://localhost:5000/expenses");
+  //     setRawData(data);
+  //   };
+  //   getExpensesData();
+  //   //dispatch(loadContents(rawData))
+  // }, []);
+  // dispatch(loadContents(rawData));
 
   return (
     <Wrapper>
@@ -121,7 +136,7 @@ const Expenditure = () => {
                   <Left>
                     <Date>{data.date}</Date>
                     <ExpenditureDetail>
-                      {data.item} - {data.description}
+                      {data.item} - {data.description} (by Jiwon)
                     </ExpenditureDetail>
                   </Left>
                   <Right>
