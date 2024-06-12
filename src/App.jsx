@@ -33,12 +33,12 @@ function App() {
   // })
 
   // 다른 api는 다른 쿼리키 사용
-  const { data, isPending, isError } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["expenses"],
     queryFn: fetchExpenses,
   });
 
-  if (isPending) {
+  if (isLoading) {
     return <div style={{ color: "white" }}>로딩중입니다...</div>;
   }
 
@@ -62,19 +62,17 @@ function App() {
 
   return (
     <>
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/signup" element={<PublicRoute element={SignUp} />} />
-            <Route path="/login" element={<PublicRoute element={SignIn} />} />
-            <Route element={<PrivateRoute element={Layout} />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/detail/:id" element={<Detail />} />
-              <Route path="/myprofile" element={<MyProfile />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/signup" element={<PublicRoute element={SignUp} />} />
+          <Route path="/login" element={<PublicRoute element={SignIn} />} />
+          <Route element={<PrivateRoute element={Layout} />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/detail/:id" element={<Detail />} />
+            <Route path="/myprofile" element={<MyProfile />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

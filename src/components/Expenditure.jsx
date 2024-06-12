@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { loadContents } from "../redux/slices/contentsSlice";
+import { useQuery } from "@tanstack/react-query";
 
 const Wrapper = styled.div`
   width: 800px;
@@ -106,24 +107,35 @@ const ExpenditureAmount = styled.span`
 
 const Expenditure = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [rawData, setRawData] = useState([]);
   const contents = useSelector((state) => state.contents.contents);
   const clickedMonth = useSelector((state) => state.clickedMonth.clickedMonth);
 
-  const filteredList = contents.filter((data) => {
-    if (Number(data.date.slice(5, 7)) === clickedMonth) return data;
+  const getExpensesData = async () => {
+    const { data } = await axios.get("http://localhost:5000/expenses");
+    return data;
+  };
+
+  const {
+    data: expenses,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["expenses"],
+    queryFn: getExpensesData,
   });
 
-  // useEffect(() => {
-  //   const getExpensesData = async () => {
-  //     const { data } = await axios.get("http://localhost:5000/expenses");
-  //     setRawData(data);
-  //   };
-  //   getExpensesData();
-  //   //dispatch(loadContents(rawData))
-  // }, []);
-  // dispatch(loadContents(rawData));
+  if (isLoading) {
+    return <h1>로딩중입니다 . . .</h1>;
+  }
+
+  if (isError) {
+    return <h1>데이터 조회 중 오류가 발생했습니다. . .</h1>;
+  }
+
+  const filteredList = expenses.filter((data) => {
+    if (Number(data.date.slice(5, 7)) === clickedMonth) return data;
+  });
+  console.log(filteredList);
 
   return (
     <Wrapper>
@@ -136,7 +148,7 @@ const Expenditure = () => {
                   <Left>
                     <Date>{data.date}</Date>
                     <ExpenditureDetail>
-                      {data.item} - {data.description} (by Jiwon)
+                      {data.item} - {data.description} (by {data.createdBy})
                     </ExpenditureDetail>
                   </Left>
                   <Right>
