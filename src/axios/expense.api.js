@@ -1,4 +1,5 @@
 import axios from "axios";
+import { token } from "./auth.api";
 
 const JSON_SERVER_HOST = "http://localhost:5000";
 
@@ -25,10 +26,10 @@ export const postExpense = async (newExpense) => {
   }
 };
 
-export const updateExpenseData = async (editedContent) => {
+export const updateExpenseData = async (editedContent, contentId) => {
   try {
     const { data } = await axios.patch(
-      `${JSON_SERVER_HOST}/expenses`,
+      `${JSON_SERVER_HOST}/expenses/${contentId}`,
       editedContent
     );
     return data;

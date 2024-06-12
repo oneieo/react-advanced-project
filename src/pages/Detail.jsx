@@ -85,7 +85,6 @@ const Button = styled.button`
 `;
 
 const Detail = () => {
-  //const { prevcontents, setContents } = useContext(ContentsContext);
   const refDate = useRef(null);
   const refItem = useRef(null);
   const refDescription = useRef(null);
@@ -127,21 +126,15 @@ const Detail = () => {
   const matchedContent = expenses.find((content) => content.id === id);
 
   const handleModiBtn = () => {
-    // const updatedContents = contents.map((content) => {
-    //   return content.id === id
-    //     ? {
-    //         ...content,
-    //         date: refDate.current.value,
-    //         item: refItem.current.value,
-    //         description: refDescription.current.value,
-    //         // 문자열(String) 객체에 대해서는 toLocaleString() 메서드를 사용할 수 없으므로 숫자(Number) 객체로 형변환
-    //         amount: Number(refAmount.current.value),
-    //       }
-    //     : content;
-    // });
-
-    // dispatch(updateContents(updatedContents));
-    // updateExpenseMutation.mutate();
+    const updatedContent = {
+      ...matchedContent,
+      date: refDate.current.value,
+      item: refItem.current.value,
+      description: refDescription.current.value,
+      // 문자열(String) 객체에 대해서는 toLocaleString() 메서드를 사용할 수 없으므로 숫자(Number) 객체로 형변환
+      amount: Number(refAmount.current.value),
+    };
+    updateExpenseMutation.mutate(updatedContent, matchedContent.id);
 
     navigate("/");
   };
