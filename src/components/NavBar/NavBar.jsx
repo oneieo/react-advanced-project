@@ -3,11 +3,16 @@ import * as S from "./NavBar.styled";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { changeValue } from "../../redux/slices/userInfo.slice";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { logout } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({});
+  const user = useSelector((state) => state.userInfo.userInfo);
+  console.log(user);
   const [profileImg, setProfileImg] = useState(
     "/public/default_profileImg.png"
   );
@@ -25,11 +30,19 @@ const NavBar = () => {
           },
         }
       );
-      setUserInfo(data);
+      console.log(data);
+      //setUserInfo(data);
+      dispatch(
+        changeValue({
+          userId: data.id,
+          nickname: data.nickname,
+          profileImg: data.avatar,
+        })
+      );
     };
     getUserData();
     // token이 변경될 때마다(로그인 하면) getUserData 실행
-  }, [token]);
+  }, []);
 
   const handleLogout = () => {
     const confirmLogout = confirm("로그아웃 하시겠습니까?");
@@ -51,8 +64,8 @@ const NavBar = () => {
           </Link>
         </S.LeftBox>
         <S.RightBox>
-          <S.ProfileImg src={profileImg} />
-          <S.Nickname>{userInfo.nickname}</S.Nickname>
+          <S.ProfileImg src={user.profileImg} />
+          <S.Nickname>{user.nickname}</S.Nickname>
           <S.Button onClick={handleLogout}>Logout</S.Button>
         </S.RightBox>
       </S.Container>

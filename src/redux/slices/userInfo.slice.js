@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   userInfo: {
     userId: "",
-    password: "",
     nickName: "",
     profileImg: "",
   },
@@ -14,8 +13,9 @@ const userInfoSlice = createSlice({
   initialState,
   reducers: {
     changeValue: (state, action) => {
-      state[action.payload.type] = action.payload.content;
+      //state[action.payload.type] = action.payload.content;
       //console.log(action.payload.content);
+      state.userInfo = action.payload;
     },
   },
 });

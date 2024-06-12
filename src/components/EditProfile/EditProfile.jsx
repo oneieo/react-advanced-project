@@ -2,14 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import * as S from "./EditProfile.styled";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { changeValue } from "../../redux/slices/userInfo.slice";
+import { ProfileImg } from "../NavBar/NavBar.styled";
 
 const EditProfile = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const nicknameRef = useRef();
   const noticeRef = useRef();
   const [imgFile, setImgFile] = useState("");
   const [nickname, setNickname] = useState("");
-  const [editedUserInfo, setEditedUserInfo] = useState({});
+  //const [editedUserInfo, setEditedUserInfo] = useState({});
+  const user = useSelector((state) => state.userInfo.userInfo);
   const formData = new FormData();
 
   const token = localStorage.getItem("accessToken");
@@ -44,7 +49,7 @@ const EditProfile = () => {
     e.preventDefault();
 
     // data를 바로 가져오기 보다는 response 가져와서 다음에 구조분해할당하기
-    const response = await axios.patch(
+    const { data } = await axios.patch(
       "https://moneyfulpublicpolicy.co.kr/profile",
       formData,
       {
@@ -53,6 +58,24 @@ const EditProfile = () => {
           Authorization: `Bearer ${token}`,
         },
       }
+    );
+
+    // 굳이 api 요청 한 번 더해야하는지 ??
+    const { data: userData } = await axios.get(
+      "https://moneyfulpublicpolicy.co.kr/user",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    dispatch(
+      changeValue({
+        ...user,
+        nickname: userData.nickname,
+        profileImg: userData.avatar,
+      })
     );
     navigate("/");
   };
@@ -69,7 +92,7 @@ const EditProfile = () => {
               type="text"
               ref={nicknameRef}
               placeholder="변경할 닉네임을 입력해주세요."
-              defaultValue={nickname}
+              defaultValue={user.nickname}
               onChange={(e) => setNickname(e.target.value)}
             />
             <S.Notice ref={(element) => (noticeRef.current = element)}>
