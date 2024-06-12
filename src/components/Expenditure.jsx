@@ -109,6 +109,7 @@ const ExpenditureAmount = styled.span`
 const Expenditure = () => {
   const navigate = useNavigate();
   const clickedMonth = useSelector((state) => state.clickedMonth.clickedMonth);
+  const { userId } = useSelector((state) => state.userInfo.userInfo);
 
   const {
     data: expenses,
@@ -131,13 +132,24 @@ const Expenditure = () => {
     if (Number(data.date.slice(5, 7)) === clickedMonth) return data;
   });
 
+  const handleExpenseClick = (id, createdBy) => {
+    if (userId !== createdBy) {
+      alert(`[ID: ${userId}]님이 작성한 지출내역이 아닙니다.`);
+      return;
+    }
+    navigate(`/detail/${id}`);
+  };
+
   return (
     <Wrapper>
       <Boxes>
         {filteredList.length > 0 ? (
           filteredList.map((data) => {
             return (
-              <Box key={data.id} onClick={() => navigate(`/detail/${data.id}`)}>
+              <Box
+                key={data.id}
+                onClick={() => handleExpenseClick(data.id, data.createdBy)}
+              >
                 <Texts>
                   <Left>
                     <Date>{data.date}</Date>
