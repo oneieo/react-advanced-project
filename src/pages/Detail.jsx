@@ -156,7 +156,6 @@ const Detail = () => {
     if (isConfirmed) {
       await deleteExpenseMutation.mutateAsync(updatedContents.id);
       queryClient.invalidateQueries(["expenses"]);
-      // 강제 새로고침 외에는 바로 리렌더링 되는 방법이 없을까요,,,?
       navigate("/");
     }
   };

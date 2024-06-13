@@ -9,7 +9,6 @@ const SignUpForm = () => {
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
   const navigate = useNavigate();
-  // notice 어떤 방식으로 구현할지 생각해보기
   const idRef = useRef();
   const noticeRef = useRef([]);
 

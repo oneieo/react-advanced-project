@@ -6,8 +6,6 @@ const AUTH_API = axios.create({
   baseURL: "https://moneyfulpublicpolicy.co.kr",
 });
 
-const token = localStorage.getItem("accessToken");
-
 // 두 개의 콜백함수를 인자로 받는 인터셉터 (onFulfilled, onRejected)
 AUTH_API.interceptors.request.use((config) => {
   console.log("인터셉터 요청 성공!");
