@@ -18,20 +18,6 @@ const SignInForm = () => {
     noticeRef.current[1].style.display = "none";
   }, []);
 
-  // const getUserData = async () => {
-  //   const { data } = await axios.get(
-  //     "https://moneyfulpublicpolicy.co.kr/user",
-  //     {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InN1bjAyMCIsImlhdCI6MTcxODA5NTAyMSwiZXhwIjoxNzE4MDk4NjIxfQ.QPbsq5Ltr4N-Jaeabhj5KAJEuBCcZ8EpVU-Cp8p4-I4`,
-  //       },
-  //     }
-  //   );
-  //   console.log(data);
-  // };
-  // getUserData();
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {

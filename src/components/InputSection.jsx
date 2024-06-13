@@ -118,14 +118,14 @@ const InputSection = () => {
 
   const {
     data: userData,
-    isLoading,
+    isPending,
     isError,
   } = useQuery({
     queryKey: ["userData"],
     queryFn: getUserData,
   });
 
-  if (isLoading) {
+  if (isPending) {
     return <h1>로딩중입니다 . . .</h1>;
   }
   if (isError) {

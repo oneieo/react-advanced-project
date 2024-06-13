@@ -110,18 +110,16 @@ const Detail = () => {
     },
   });
 
-  console.log(updateExpenseMutation);
-
   const {
     data: expenses,
-    isLoading,
+    isPending,
     isError,
   } = useQuery({
     queryKey: ["expenses"],
     queryFn: getExpenses,
   });
 
-  if (isLoading) {
+  if (isPending) {
     return <h1>로딩중입니다 . . .</h1>;
   }
   if (isError) {
