@@ -3,7 +3,12 @@ import styled from "styled-components";
 import { useState } from "react";
 import getToday from "../utils/getToday";
 import axios from "axios";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { postExpense } from "../axios/expense.api";
 import { useNavigate } from "react-router-dom";
 
@@ -83,16 +88,16 @@ const InputSection = () => {
   const [item, setItem] = useState("");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
-  const queryClient = new QueryClient();
-  const navigate = useNavigate();
+  const queryClient = useQueryClient(); //
+  //const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: postExpense,
     onSuccess: () => {
       // 쿼리키값 넣어주기
       queryClient.invalidateQueries(["expenses"]);
-      // 강제 새로고침
-      navigate(0);
+      // 강제 새로고침....
+      //navigate(0);
     },
   });
 

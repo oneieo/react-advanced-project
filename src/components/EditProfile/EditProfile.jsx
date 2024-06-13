@@ -48,16 +48,12 @@ const EditProfile = () => {
     e.preventDefault();
 
     // data를 바로 가져오기 보다는 response 가져온 다음에 구조분해할당하기
-    const { data } = await axios.patch(
-      "https://moneyfulpublicpolicy.co.kr/profile",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    await axios.patch("https://moneyfulpublicpolicy.co.kr/profile", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     // 굳이 api 요청 한 번 더해야하는지 ????
     const { data: userData } = await axios.get(

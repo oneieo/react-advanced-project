@@ -110,14 +110,16 @@ const Expenditure = () => {
 
   const {
     data: expenses,
-    isLoading,
+    isPending,
     isError,
   } = useQuery({
     queryKey: ["expenses"],
     queryFn: getExpenses,
   });
 
-  if (isLoading) {
+  console.log(expenses);
+
+  if (isPending) {
     return <h1>로딩중입니다 . . .</h1>;
   }
 
