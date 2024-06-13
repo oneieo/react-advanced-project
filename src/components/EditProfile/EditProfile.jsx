@@ -4,8 +4,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { changeValue } from "../../redux/slices/userInfo.slice";
-import { ProfileImg } from "../NavBar/NavBar.styled";
-import { token } from "../../axios/auth.api";
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -17,6 +15,8 @@ const EditProfile = () => {
   //const [editedUserInfo, setEditedUserInfo] = useState({});
   const user = useSelector((state) => state.userInfo.userInfo);
   const formData = new FormData();
+
+  const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
     nicknameRef.current.focus();

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { token } from "./auth.api";
 
 const JSON_SERVER_HOST = "http://localhost:5000";
 

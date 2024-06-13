@@ -1,10 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import getToday from "../utils/getToday";
-import { useDispatch, useSelector } from "react-redux";
-import { createContents, loadContents } from "../redux/slices/contentsSlice";
-import { token } from "../axios/auth.api";
 import axios from "axios";
 import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { postExpense } from "../axios/expense.api";
@@ -98,6 +95,8 @@ const InputSection = () => {
       navigate(0);
     },
   });
+
+  const token = localStorage.getItem("accessToken");
 
   const getUserData = async () => {
     const { data } = await axios.get(

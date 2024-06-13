@@ -5,7 +5,6 @@ import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { changeValue } from "../../redux/slices/userInfo.slice";
-import { token } from "../../axios/auth.api";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -17,6 +16,7 @@ const NavBar = () => {
   );
 
   useEffect(() => {
+    const token = localStorage.getItem("accessToken");
     const getUserData = async () => {
       const { data } = await axios.get(
         "https://moneyfulpublicpolicy.co.kr/user",

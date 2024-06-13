@@ -1,9 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { loadContents } from "../redux/slices/contentsSlice";
+import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import { getExpenses } from "../axios/expense.api";
 
