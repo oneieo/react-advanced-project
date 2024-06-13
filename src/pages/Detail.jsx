@@ -1,10 +1,7 @@
 import styled from "styled-components";
 import { useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteContents, updateContents } from "../redux/slices/contentsSlice";
 import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import {
   deleteExpenseData,
   getExpenses,
@@ -92,22 +89,23 @@ const Detail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const queryClient = new QueryClient();
+
+  // async await
+  // {mutateAsync : deleteExpenseData}
   const deleteExpenseMutation = useMutation({
     mutationFn: deleteExpenseData,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["expenses"]);
-      // 강제 새로고침 외에는 바로 리렌더링 되는 방법이 없을까요,,,?
-      navigate(0);
-    },
   });
+
+  // callback
   const updateExpenseMutation = useMutation({
     mutationFn: updateExpenseData,
     onSuccess: () => {
       queryClient.invalidateQueries(["expenses"]);
       navigate("/");
-      navigate(0);
     },
   });
+
+  console.log(updateExpenseMutation);
 
   const {
     data: expenses,
@@ -135,7 +133,6 @@ const Detail = () => {
     //           date: refDate.current.value,
     //           item: refItem.current.value,
     //           description: refDescription.current.value,
-    //           // 문자열(String) 객체에 대해서는 toLocaleString() 메서드를 사용할 수 없으므로 숫자(Number) 객체로 형변환
     //           amount: Number(refAmount.current.value),
     //         }
     //       : content;
@@ -149,14 +146,17 @@ const Detail = () => {
       amount: Number(refAmount.current.value),
     };
     updateExpenseMutation.mutate(newContent);
+    //mutate then.catch
+    //mutateAsync
   };
 
-  const handleDeleteBtn = () => {
+  const handleDeleteBtn = async () => {
     const updatedContents = expenses.find((content) => content.id === id);
-    console.log(updatedContents.id);
     const isConfirmed = confirm("해당 지출내역을 삭제합니다.");
     if (isConfirmed) {
-      deleteExpenseMutation.mutate(updatedContents.id);
+      await deleteExpenseMutation.mutateAsync(updatedContents.id);
+      queryClient.invalidateQueries(["expenses"]);
+      // 강제 새로고침 외에는 바로 리렌더링 되는 방법이 없을까요,,,?
       navigate("/");
     }
   };

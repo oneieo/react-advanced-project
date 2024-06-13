@@ -47,7 +47,7 @@ const EditProfile = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    // data를 바로 가져오기 보다는 response 가져와서 다음에 구조분해할당하기
+    // data를 바로 가져오기 보다는 response 가져온 다음에 구조분해할당하기
     const { data } = await axios.patch(
       "https://moneyfulpublicpolicy.co.kr/profile",
       formData,

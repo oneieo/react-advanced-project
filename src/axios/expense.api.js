@@ -26,9 +26,10 @@ export const postExpense = async (newExpense) => {
 };
 
 export const updateExpenseData = async (editedContent) => {
+  // put과 patch 기능은 비슷함
   const { id, ...rest } = editedContent;
   try {
-    const { data } = await axios.put(
+    const { data } = await axios.patch(
       `${JSON_SERVER_HOST}/expenses/${id}`,
       rest
     );

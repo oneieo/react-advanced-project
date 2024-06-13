@@ -122,7 +122,7 @@
       "month": 7,
       "date": "2024-07-16",
       "item": "여행",
-      "amount": 300000,
+      "amount": 400000,
       "description": "여름 휴가",
       "createdBy": "Jisun"
     },
@@ -136,13 +136,22 @@
       "createdBy": "oneiee"
     },
     {
-      "month": 7,
-      "date": "2024-07-20",
+      "id": "39317342-c2f2-4bd9-b43a-b164dc49a72a",
+      "month": 6,
+      "date": "2024-06-13",
+      "item": "식비",
+      "amount": 13500,
+      "description": "소림마라 마라탕 ",
+      "createdBy": "oneiee"
+    },
+    {
+      "id": "2d7a9fc3-9404-43cc-b22f-d93999dd8add",
+      "month": 6,
+      "date": "2024-06-13",
       "item": "간식",
-      "amount": 315000,
-      "description": "수박",
-      "createdBy": "oneiee",
-      "id": "e6e5ee8a-b4d6-405e-bfa2-b2e3a15320b0"
+      "amount": 2500,
+      "description": "하리보젤리",
+      "createdBy": "Jisun"
     }
   ]
 }
