@@ -1,12 +1,7 @@
 import styled from "styled-components";
 import { useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   deleteExpenseData,
   getExpenses,
@@ -129,18 +124,6 @@ const Detail = () => {
   const matchedContent = expenses.find((content) => content.id === id);
 
   const handleModiBtn = () => {
-    //   const updatedContents = expenses.map((content) => {
-    //     return content.id === id
-    //       ? {
-    //           ...content,
-    //           date: refDate.current.value,
-    //           item: refItem.current.value,
-    //           description: refDescription.current.value,
-    //           amount: Number(refAmount.current.value),
-    //         }
-    //       : content;
-    //   }
-    // );
     const newContent = {
       ...matchedContent,
       date: refDate.current.value,
@@ -149,8 +132,6 @@ const Detail = () => {
       amount: Number(refAmount.current.value),
     };
     updateExpenseMutation.mutate(newContent);
-    //mutate then.catch
-    //mutateAsync
   };
 
   const handleDeleteBtn = async () => {

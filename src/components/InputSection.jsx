@@ -3,14 +3,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import getToday from "../utils/getToday";
 import axios from "axios";
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { postExpense } from "../axios/expense.api";
-import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 800px;
